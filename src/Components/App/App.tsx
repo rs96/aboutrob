@@ -5,14 +5,12 @@ import './App.css';
 
 const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <Title title='Rob' />
-        <Navbar />
-        <p>
-          This is the first draft of the work.
+    <div className='App'>
+      <Title title='Rob' />
+      <Navbar items={['Main', 'Contact']} />
+      <p>
+        This is the first draft of the work.
         </p>
-      </header>
     </div>
   );
 }
