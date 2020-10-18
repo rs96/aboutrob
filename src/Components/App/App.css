@@ -1,8 +1,16 @@
 .App {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   text-align: center;
   font-family: 'Roboto';
+  min-width: 500px;
+  width: 80%;
+}
+
+.App-container {
+  display: flex;
+  justify-content: center;
 }
 
 @keyframes App-logo-spin {
