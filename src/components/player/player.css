@@ -1,0 +1,8 @@
+.player {
+  display: flex;
+  width: 90vw;
+}
+
+video {
+  width: 100%;
+}
