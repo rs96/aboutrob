@@ -11,14 +11,25 @@ body {
   text-align: center;
   justify-content: center;
   align-items: center;
-  /* font-weight: 300; */
   font-family: "Roboto Slab", serif;
 }
+
+/* .mobile-app {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+} */
 
 .main-body {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-grow: 1;
+  overflow: auto;
+  position: relative;
+  top: 5.5rem;
 }
 
 .card-area {
