@@ -8,7 +8,7 @@ export const Player = () => {
   let progress = document.getElementById("progress") as HTMLProgressElement;
   let controls = document.getElementById("controls") as HTMLElement;
   let player = document.getElementById("player") as HTMLElement;
-  let mouseMoveTimer;
+  let mouseMoveTimer: NodeJS.Timeout;
 
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -21,12 +21,13 @@ export const Player = () => {
 
   const handleMouseMove = () => {
     if (controls.getAttribute("data-state") === "visible") {
+      clearTimeout(mouseMoveTimer);
+      mouseMoveTimer = setTimeout(() => {
+        controls.setAttribute("data-state", "hidden");
+      }, 1000);
       return;
     }
     controls.setAttribute("data-state", "visible");
-    setTimeout(() => {
-      controls.setAttribute("data-state", "hidden");
-    }, 2000);
   };
 
   const handlePlayPauseOnClick = () => {
