@@ -63,13 +63,27 @@ export const Player = () => {
   const handleFullscreenToggle = () => {
     if (document.fullscreenElement === null) {
       player.requestFullscreen();
+    } else {
+      document.exitFullscreen();
     }
-    document.exitFullscreen();
+  };
+
+  const handleOnLoadedMetadata = () => {
+    progress.setAttribute("max", video.duration.toString());
+  };
+
+  const handleTimeUpdate = () => {
+    progress.value = video.currentTime;
   };
 
   return (
     <figure id="player" className="player" onMouseMove={handleMouseMove}>
-      <video id="video" controls={false}>
+      <video
+        id="video"
+        controls={false}
+        onLoadedMetadata={handleOnLoadedMetadata}
+        onTimeUpdate={handleTimeUpdate}
+      >
         <source src={content} type="video/mp4" />
         Your browser doesn't support HTML video.
       </video>
