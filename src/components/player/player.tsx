@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { MouseEventHandler, useEffect, useState } from "react";
 import icons from "./icons";
 import content from "./deadclever.mp4";
 import "./player.css";
@@ -28,6 +28,17 @@ export const Player = () => {
       return;
     }
     controls.setAttribute("data-state", "visible");
+  };
+
+  const handleMouseEnterControls = () => {
+    clearTimeout(mouseMoveTimer);
+    controls.setAttribute("data-state", "visible");
+  };
+
+  const handleMouseLeaveControls = () => {
+    mouseMoveTimer = setTimeout(() => {
+      controls.setAttribute("data-state", "hidden");
+    }, 1000);
   };
 
   const handlePlayPauseOnClick = () => {
@@ -76,6 +87,12 @@ export const Player = () => {
     progress.value = video.currentTime;
   };
 
+  const handleSkipAhead: MouseEventHandler<HTMLElement> = (event) => {
+    const rect = progress.getBoundingClientRect();
+    const pos = (event.pageX - rect.left) / progress.offsetWidth;
+    video.currentTime = pos * video.duration;
+  };
+
   return (
     <figure id="player" className="player" onMouseMove={handleMouseMove}>
       <video
@@ -87,7 +104,13 @@ export const Player = () => {
         <source src={content} type="video/mp4" />
         Your browser doesn't support HTML video.
       </video>
-      <div id="controls" className="controls" data-state="hidden">
+      <div
+        id="controls"
+        className="controls"
+        data-state="hidden"
+        onMouseEnter={handleMouseEnterControls}
+        onMouseLeave={handleMouseLeaveControls}
+      >
         <button
           id="playpause"
           type="button"
@@ -104,10 +127,8 @@ export const Player = () => {
         >
           <img src={icons.stop} />
         </button>
-        <div className="progress">
-          <progress id="progress" value="0">
-            <span id="progress-bar"></span>
-          </progress>
+        <div className="progress" onClick={handleSkipAhead}>
+          <progress id="progress" value="0" />
         </div>
         <button
           id="mute"
