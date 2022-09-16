@@ -1,7 +1,3 @@
-/* .player {
-  width: 90vw;
-} */
-
 video {
   max-width: 100%;
 }
@@ -60,4 +56,27 @@ img {
 
 progress {
   width: 100%;
+}
+
+figure[data-fullscreen="true"] video::-webkit-media-controls {
+  display: none !important;
+}
+figure[data-fullscreen="true"] {
+  max-width: 100%;
+  width: 100%;
+  margin: auto;
+  padding: 0;
+}
+figure[data-fullscreen="true"] video {
+  position: absolute;
+  margin: auto;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+figure[data-fullscreen="true"] .controls {
+  position: absolute;
+  top: 97vh;
+  height: 3vh;
+  width: 100%;
+  z-index: 2147483647;
 }

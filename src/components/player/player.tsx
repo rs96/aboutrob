@@ -73,8 +73,10 @@ export const Player = () => {
 
   const handleFullscreenToggle = () => {
     if (document.fullscreenElement === null) {
+      player.setAttribute("data-fullscreen", "true");
       player.requestFullscreen();
     } else {
+      player.setAttribute("data-fullscreen", "false");
       document.exitFullscreen();
     }
   };
@@ -94,7 +96,12 @@ export const Player = () => {
   };
 
   return (
-    <figure id="player" className="player" onMouseMove={handleMouseMove}>
+    <figure
+      id="player"
+      className="player"
+      data-fullscreen="false"
+      onMouseMove={handleMouseMove}
+    >
       <video
         id="video"
         controls={false}
