@@ -3,18 +3,15 @@ video {
 }
 
 .player {
-  height: 80%;
-  max-height: 50vh;
   max-width: 95vw;
 }
 
 .controls {
   width: 100%;
-  height: 8.0971659919028340080971659919028%; /* of figure's height */
+  height: 25px;
   position: relative;
-  top: -8.0971659919028340080971659919028%;
+  top: -25px;
   background: #fff;
-  /* background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 10)); */
 }
 
 .controls[data-state="hidden"] {
@@ -58,22 +55,22 @@ progress {
   width: 100%;
 }
 
-figure[data-fullscreen="true"] video::-webkit-media-controls {
+.player[data-fullscreen="true"] video::-webkit-media-controls {
   display: none !important;
 }
-figure[data-fullscreen="true"] {
+.player[data-fullscreen="true"] {
   max-width: 100%;
   width: 100%;
   margin: auto;
   padding: 0;
 }
-figure[data-fullscreen="true"] video {
+.player[data-fullscreen="true"] video {
   position: absolute;
   margin: auto;
   top: 50%;
   transform: translate(-50%, -50%);
 }
-figure[data-fullscreen="true"] .controls {
+.player[data-fullscreen="true"] .controls {
   position: absolute;
   top: 97vh;
   height: 3vh;

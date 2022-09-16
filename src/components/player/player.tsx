@@ -24,7 +24,7 @@ export const Player = () => {
       clearTimeout(mouseMoveTimer);
       mouseMoveTimer = setTimeout(() => {
         controls.setAttribute("data-state", "hidden");
-      }, 1000);
+      }, 2000);
       return;
     }
     controls.setAttribute("data-state", "visible");
@@ -96,7 +96,7 @@ export const Player = () => {
   };
 
   return (
-    <figure
+    <div
       id="player"
       className="player"
       data-fullscreen="false"
@@ -170,6 +170,6 @@ export const Player = () => {
           <img src={icons.fullscreen} />
         </button>
       </div>
-    </figure>
+    </div>
   );
 };
