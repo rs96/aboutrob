@@ -9,26 +9,31 @@ export const Player = () => {
   let progress = document.getElementById("progress") as HTMLProgressElement;
   let controls = document.getElementById("controls") as HTMLElement;
   let player = document.getElementById("player") as HTMLElement;
-  const timerRef = useRef(
-    setTimeout(() => {
-      controls.setAttribute("data-state", "hidden");
-    }, 1000)
-  );
+  let volumeControls = document.getElementById(
+    "volume-controls"
+  ) as HTMLProgressElement;
+  const timerRef = useRef(setTimeout(() => {}, 0));
 
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isShowVolumeControls, setIsShowVolumeControls] = useState(false);
 
   useEffect(() => {
     video = document.getElementById("video") as HTMLVideoElement;
     progress = document.getElementById("progress") as HTMLProgressElement;
     controls = document.getElementById("controls") as HTMLElement;
     player = document.getElementById("player") as HTMLElement;
+    volumeControls = document.getElementById(
+      "volume-controls"
+    ) as HTMLProgressElement;
   });
 
   const handleMouseMoveVideo = () => {
     controls.setAttribute("data-state", "visible");
     clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => {
-      controls.setAttribute("data-state", "hidden");
+      if (!isShowVolumeControls) {
+        controls.setAttribute("data-state", "hidden");
+      }
     }, 1000);
   };
 
@@ -60,13 +65,11 @@ export const Player = () => {
     setIsPlaying(false);
   };
 
-  const volumeChange = (direction: "+" | "-") => () => {
-    const currentVolume = Math.floor(video.volume * 10) / 10;
-    if (direction === "+" && currentVolume < 1) {
-      video.volume += 0.1;
-    } else if (direction === "-" && currentVolume > 0) {
-      video.volume -= 0.1;
-    }
+  const handleVolumeChange: MouseEventHandler<HTMLElement> = (event) => {
+    const rect = volumeControls.getBoundingClientRect();
+    const pos = (rect.bottom - event.pageY) / rect.height;
+    video.volume = pos;
+    volumeControls.value = video.volume;
   };
 
   const handleMuteOnClick = () => {
@@ -114,7 +117,11 @@ export const Player = () => {
         className="controls"
         data-state="visible"
         onMouseEnter={handleMouseEnterControls}
-        onMouseLeave={handleMouseLeaveControls}
+        onMouseLeave={() => {
+          if (!isShowVolumeControls) {
+            handleMouseLeaveControls();
+          }
+        }}
       >
         <button
           id="playpause"
@@ -140,24 +147,18 @@ export const Player = () => {
           type="button"
           data-state="mute"
           onClick={handleMuteOnClick}
+          onMouseEnter={() => setIsShowVolumeControls(true)}
+          onMouseLeave={() => setIsShowVolumeControls(false)} // set timeout for this
         >
           <img src={icons.mute} />
-        </button>
-        <button
-          id="volinc"
-          type="button"
-          data-state="volup"
-          onClick={volumeChange("+")}
-        >
-          <img src={icons.volume} />+
-        </button>
-        <button
-          id="voldec"
-          type="button"
-          data-state="voldown"
-          onClick={volumeChange("-")}
-        >
-          <img src={icons.volume} />-
+          {isShowVolumeControls && (
+            <progress
+              id="volume-controls"
+              value="0"
+              max="1"
+              onClick={handleVolumeChange}
+            />
+          )}
         </button>
         <button
           id="fs"

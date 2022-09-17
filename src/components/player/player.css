@@ -52,8 +52,16 @@ img {
   width: 75.390625%;
 }
 
-progress {
+#progress {
   width: 100%;
+}
+
+#volume-controls {
+  transform-origin: left;
+  transform: rotate(270deg) translate(17%, 60%);
+  -webkit-transform: rotate(270deg) translate(17%, 60%); /*Webkit*/
+  -moz-transform: rotate(270deg) translate(17%, 60%); /*FireFox*/
+  width: 500%;
 }
 
 .player[data-fullscreen="true"] video::-webkit-media-controls {
