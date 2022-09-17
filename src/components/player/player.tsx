@@ -15,6 +15,7 @@ export const Player = () => {
   const timerRef = useRef(setTimeout(() => {}, 0));
 
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
   const [isShowVolumeControls, setIsShowVolumeControls] = useState(false);
 
   useEffect(() => {
@@ -66,6 +67,7 @@ export const Player = () => {
   };
 
   const handleVolumeChange: MouseEventHandler<HTMLElement> = (event) => {
+    setIsMuted(false);
     const rect = volumeControls.getBoundingClientRect();
     const pos = (rect.bottom - event.pageY) / rect.height;
     video.volume = pos;
@@ -73,6 +75,8 @@ export const Player = () => {
   };
 
   const handleMuteOnClick = () => {
+    setIsMuted(!isMuted);
+    volumeControls.value = 0;
     video.muted = !video.muted;
   };
 
@@ -146,15 +150,17 @@ export const Player = () => {
           id="mute"
           type="button"
           data-state="mute"
-          onClick={handleMuteOnClick}
           onMouseEnter={() => setIsShowVolumeControls(true)}
           onMouseLeave={() => setIsShowVolumeControls(false)} // set timeout for this
         >
-          <img src={icons.mute} />
+          <img
+            src={isMuted ? icons.mute : icons.volume}
+            onClick={handleMuteOnClick}
+          />
           {isShowVolumeControls && (
             <progress
               id="volume-controls"
-              value="0"
+              value="1"
               max="1"
               onClick={handleVolumeChange}
             />

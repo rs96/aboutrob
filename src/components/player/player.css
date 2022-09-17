@@ -52,6 +52,16 @@ img {
   width: 75.390625%;
 }
 
+progress {
+  height: 0.6em;
+  transition: 400ms;
+}
+
+progress:hover {
+  height: 80%;
+  transition: 400ms;
+}
+
 #progress {
   width: 100%;
 }
