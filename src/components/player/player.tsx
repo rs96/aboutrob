@@ -1,14 +1,19 @@
-import React, { MouseEventHandler, useEffect, useState } from "react";
+import React, { MouseEventHandler, useEffect, useRef, useState } from "react";
 import icons from "./icons";
 import content from "./deadclever.mp4";
 import "./player.css";
+import { clear } from "console";
 
 export const Player = () => {
   let video = document.getElementById("video") as HTMLVideoElement;
   let progress = document.getElementById("progress") as HTMLProgressElement;
   let controls = document.getElementById("controls") as HTMLElement;
   let player = document.getElementById("player") as HTMLElement;
-  let mouseMoveTimer: NodeJS.Timeout;
+  const timerRef = useRef(
+    setTimeout(() => {
+      controls.setAttribute("data-state", "hidden");
+    }, 1000)
+  );
 
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -19,24 +24,21 @@ export const Player = () => {
     player = document.getElementById("player") as HTMLElement;
   });
 
-  const handleMouseMove = () => {
-    if (controls.getAttribute("data-state") === "visible") {
-      clearTimeout(mouseMoveTimer);
-      mouseMoveTimer = setTimeout(() => {
-        controls.setAttribute("data-state", "hidden");
-      }, 2000);
-      return;
-    }
+  const handleMouseMoveVideo = () => {
     controls.setAttribute("data-state", "visible");
+    clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => {
+      controls.setAttribute("data-state", "hidden");
+    }, 1000);
   };
 
   const handleMouseEnterControls = () => {
-    clearTimeout(mouseMoveTimer);
+    clearTimeout(timerRef.current);
     controls.setAttribute("data-state", "visible");
   };
 
   const handleMouseLeaveControls = () => {
-    mouseMoveTimer = setTimeout(() => {
+    timerRef.current = setTimeout(() => {
       controls.setAttribute("data-state", "hidden");
     }, 1000);
   };
@@ -96,17 +98,13 @@ export const Player = () => {
   };
 
   return (
-    <div
-      id="player"
-      className="player"
-      data-fullscreen="false"
-      onMouseMove={handleMouseMove}
-    >
+    <div id="player" className="player" data-fullscreen="false">
       <video
         id="video"
         controls={false}
         onLoadedMetadata={handleOnLoadedMetadata}
         onTimeUpdate={handleTimeUpdate}
+        onMouseMove={handleMouseMoveVideo}
       >
         <source src={content} type="video/mp4" />
         Your browser doesn't support HTML video.
@@ -114,7 +112,7 @@ export const Player = () => {
       <div
         id="controls"
         className="controls"
-        data-state="hidden"
+        data-state="visible"
         onMouseEnter={handleMouseEnterControls}
         onMouseLeave={handleMouseLeaveControls}
       >

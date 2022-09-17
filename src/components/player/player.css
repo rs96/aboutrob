@@ -3,6 +3,7 @@ video {
 }
 
 .player {
+  height: 100%;
   max-width: 95vw;
 }
 
