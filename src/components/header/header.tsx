@@ -1,22 +1,28 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "./header.css";
+import { getActiveClassName } from "../../queries";
 
 interface HeaderProps {
-  sections: string[];
+    sections: string[];
 }
 
 const Header = ({ sections }: HeaderProps) => (
-  <div className="header">
-    <div className="title">about:rob</div>
-    <div className="sections">
-      {sections.map((section) => (
-        <div key={section} className="section">
-          <Link to={`/${section.toLowerCase()}`}>{section}</Link>
+    <div className="header">
+        <div className="title">about:rob</div>
+        <div className="sections">
+            {sections.map((section) => (
+                <div key={section} className="section">
+                    <NavLink
+                        className={getActiveClassName}
+                        to={`/${section.toLowerCase()}`}
+                    >
+                        {section}
+                    </NavLink>
+                </div>
+            ))}
         </div>
-      ))}
     </div>
-  </div>
 );
 
 export default Header;
