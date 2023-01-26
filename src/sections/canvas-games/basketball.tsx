@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import * as utils from "./utils";
 import "./index.css";
 import * as types from "./types";
 import * as constants from "./constants";
+import * as draw from "./draw";
 
 const ball = {
     position: { x: 10, y: 10 },
@@ -15,6 +16,7 @@ export const Basketball = () => {
         width: number;
         height: number;
     }>({ width: 0, height: 0 });
+    const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null);
 
     const handleBallThrow = (ball: types.Ball) => (event: any) => {
         // need to calculate where relative mouse position to ball is
@@ -40,34 +42,7 @@ export const Basketball = () => {
         return { x, y };
     };
 
-    const drawBall = (
-        ctx: CanvasRenderingContext2D | null,
-        ball: types.Ball
-    ) => {
-        if (!ctx) {
-            console.log("Error: Not finding canvas context");
-            return;
-        }
-        ctx.beginPath();
-        ctx.arc(
-            ball.position.x,
-            ball.position.y,
-            ball.radius,
-            0,
-            2 * Math.PI,
-            false
-        );
-        ctx.fillStyle = "orange";
-        ctx.fill();
-        ctx.lineWidth = 1;
-        ctx.stroke();
-    };
-
-    const draw = () => {
-        const ctx = (
-            document.getElementById("canvas") as HTMLCanvasElement
-        ).getContext("2d") as CanvasRenderingContext2D;
-
+    const frame = () => {
         if (!ctx) return;
 
         utils.clearCanvas(ctx, canvasSize);
@@ -75,20 +50,25 @@ export const Basketball = () => {
         utils.containerCollision(ball, canvasSize);
         utils.applyGravityToObject(ball);
 
-        drawBall(ctx, ball);
+        draw.ball(ctx, ball);
 
-        window.requestAnimationFrame(draw);
+        window.requestAnimationFrame(frame);
     };
 
     useEffect(() => {
-        const canvas = document.getElementById("canvas") as HTMLCanvasElement;
-        setCanvasSize({ width: canvas.width, height: canvas.height });
-        // canvasHeight = canvas.height;
-        // canvasWidth = canvas.width;
-        // canvasSize = { width: canvas.width, height: canvas.height };
-        // console.log({ canvasSize });
-        // window.requestAnimationFrame(draw);
-        draw();
+        window.requestAnimationFrame(frame);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [ctx, canvasSize]);
+
+    useEffect(() => {
+        setTimeout(() => {
+            const canvas = document.getElementById(
+                "canvas"
+            ) as HTMLCanvasElement;
+            setCanvasSize({ width: canvas.width, height: canvas.height });
+            setCtx(canvas.getContext("2d"));
+        }, 2000);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
