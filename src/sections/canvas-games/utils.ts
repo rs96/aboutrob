@@ -13,16 +13,20 @@ export const containerCollision = (
     ball: types.Ball,
     canvasSize: { height: number; width: number }
 ) => {
-    if (
-        ball.position.x + ball.radius > canvasSize.width ||
-        ball.position.x - ball.radius < 0
-    ) {
+    if (ball.position.x - ball.radius < 0) {
+        ball.position.x = ball.radius;
         ball.velocity.x = -ball.velocity.x;
     }
-    if (
-        ball.position.y + ball.radius > canvasSize.height ||
-        ball.position.y - ball.radius < 0
-    ) {
+    if (ball.position.x + ball.radius > canvasSize.width) {
+        ball.position.x = canvasSize.width - ball.radius;
+        ball.velocity.x = -ball.velocity.x;
+    }
+    if (ball.position.y - ball.radius < 0) {
+        ball.position.y = ball.radius;
+        ball.velocity.y = -ball.velocity.y;
+    }
+    if (ball.position.y + ball.radius > canvasSize.height) {
+        ball.position.y = canvasSize.height - ball.radius;
         ball.velocity.y = -ball.velocity.y;
     }
 };
