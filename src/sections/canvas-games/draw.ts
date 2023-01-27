@@ -45,3 +45,11 @@ export const target = (
     ctx.lineWidth = 1;
     ctx.stroke();
 };
+
+export const score = (ctx: CanvasRenderingContext2D | null, score: number) => {
+    if (!ctx) {
+        console.log("Error: Not finding canvas context");
+        return;
+    }
+    ctx.fillText(`Score: ${score}`, 5, 15);
+};

@@ -17,6 +17,8 @@ const target = {
     radius: 5,
 };
 
+let score = 0;
+
 export const Basketball = () => {
     const [canvasSize, setCanvasSize] = useState<{
         width: number;
@@ -59,10 +61,12 @@ export const Basketball = () => {
         if (utils.targetCollision(ball, target)) {
             target.position.x = Math.floor(Math.random() * canvasSize.width);
             target.position.y = Math.floor(Math.random() * canvasSize.height);
+            score++;
         }
 
         draw.ball(ctx, ball);
         draw.target(ctx, target);
+        draw.score(ctx, score);
 
         window.requestAnimationFrame(frame);
     };
