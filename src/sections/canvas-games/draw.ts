@@ -22,3 +22,26 @@ export const ball = (
     ctx.lineWidth = 1;
     ctx.stroke();
 };
+
+export const target = (
+    ctx: CanvasRenderingContext2D | null,
+    target: types.Ball
+) => {
+    if (!ctx) {
+        console.log("Error: Not finding canvas context");
+        return;
+    }
+    ctx.beginPath();
+    ctx.arc(
+        target.position.x,
+        target.position.y,
+        target.radius,
+        0,
+        2 * Math.PI,
+        false
+    );
+    ctx.fillStyle = "green";
+    ctx.fill();
+    ctx.lineWidth = 1;
+    ctx.stroke();
+};

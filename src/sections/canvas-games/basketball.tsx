@@ -11,6 +11,12 @@ const ball = {
     radius: 5,
 };
 
+const target = {
+    position: { x: 50, y: 50 },
+    velocity: { x: 0, y: 0 },
+    radius: 5,
+};
+
 export const Basketball = () => {
     const [canvasSize, setCanvasSize] = useState<{
         width: number;
@@ -32,7 +38,6 @@ export const Basketball = () => {
         // set speeds accordingly
         ball.velocity.x = Math.min(constants.MAX_VELOCITY, xDiff / powerScaler);
         ball.velocity.y = Math.max(-constants.MAX_VELOCITY, -yDiff / 15);
-        console.log({ ball });
     };
 
     const getCursorPosition = (canvas: HTMLCanvasElement, event: any) => {
@@ -51,7 +56,13 @@ export const Basketball = () => {
         utils.applyGravityToObject(ball);
         utils.applyDrag(ball);
 
+        if (utils.targetCollision(ball, target)) {
+            target.position.x = Math.floor(Math.random() * canvasSize.width);
+            target.position.y = Math.floor(Math.random() * canvasSize.height);
+        }
+
         draw.ball(ctx, ball);
+        draw.target(ctx, target);
 
         window.requestAnimationFrame(frame);
     };
@@ -66,8 +77,15 @@ export const Basketball = () => {
             const canvas = document.getElementById(
                 "canvas"
             ) as HTMLCanvasElement;
+            const container = document.getElementById(
+                "canvas-container"
+            ) as HTMLElement;
+
             setCanvasSize({ width: canvas.width, height: canvas.height });
-            setCtx(canvas.getContext("2d"));
+            const thisCtx = canvas.getContext("2d") as CanvasRenderingContext2D;
+            thisCtx.canvas.width = container?.offsetWidth;
+            thisCtx.canvas.height = container?.offsetHeight;
+            setCtx(thisCtx);
         }, 2000);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);

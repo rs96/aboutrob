@@ -6,7 +6,7 @@ export const clearCanvas = (
     canvasSize: { width: number; height: number }
 ) => {
     ctx.fillStyle = "white";
-    ctx.fillRect(0, 0, canvasSize.width, canvasSize.height);
+    ctx.fillRect(0, 0, canvasSize.width + 1, canvasSize.height + 1);
 };
 
 export const containerCollision = (
@@ -29,6 +29,16 @@ export const containerCollision = (
         ball.position.y = canvasSize.height - ball.radius;
         ball.velocity.y = -ball.velocity.y * constants.BOUNCE_EFFICIENCY;
     }
+};
+
+export const targetCollision = (
+    ball: types.Ball,
+    target: types.Ball
+): boolean => {
+    const dx = Math.abs(ball.position.x - target.position.x);
+    const dy = Math.abs(ball.position.y - target.position.y);
+    const c = Math.hypot(dx, dy);
+    return c < ball.radius + target.radius;
 };
 
 export const applyDrag = (ball: types.Ball) => {
