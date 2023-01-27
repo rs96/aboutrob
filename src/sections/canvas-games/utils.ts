@@ -15,20 +15,25 @@ export const containerCollision = (
 ) => {
     if (ball.position.x - ball.radius < 0) {
         ball.position.x = ball.radius;
-        ball.velocity.x = -ball.velocity.x;
+        ball.velocity.x = -ball.velocity.x * constants.BOUNCE_EFFICIENCY;
     }
     if (ball.position.x + ball.radius > canvasSize.width) {
         ball.position.x = canvasSize.width - ball.radius;
-        ball.velocity.x = -ball.velocity.x;
+        ball.velocity.x = -ball.velocity.x * constants.BOUNCE_EFFICIENCY;
     }
     if (ball.position.y - ball.radius < 0) {
         ball.position.y = ball.radius;
-        ball.velocity.y = -ball.velocity.y;
+        ball.velocity.y = -ball.velocity.y * constants.BOUNCE_EFFICIENCY;
     }
     if (ball.position.y + ball.radius > canvasSize.height) {
         ball.position.y = canvasSize.height - ball.radius;
-        ball.velocity.y = -ball.velocity.y;
+        ball.velocity.y = -ball.velocity.y * constants.BOUNCE_EFFICIENCY;
     }
+};
+
+export const applyDrag = (ball: types.Ball) => {
+    ball.velocity.y = ball.velocity.y * constants.DRAG_COEFFICIENT;
+    ball.velocity.x = ball.velocity.x * constants.DRAG_COEFFICIENT;
 };
 
 export const applyGravityToObject = (o: types.CanvasObject) => {

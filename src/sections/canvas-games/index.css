@@ -1,6 +1,7 @@
 .canvas-container {
     width: 80%;
     aspect-ratio: 16 / 9;
+    max-height: 80%;
 }
 
 canvas {

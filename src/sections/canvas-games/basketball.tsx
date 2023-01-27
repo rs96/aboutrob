@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as utils from "./utils";
 import "./index.css";
 import * as types from "./types";
@@ -49,6 +49,7 @@ export const Basketball = () => {
         utils.updateBallPosition(ball);
         utils.containerCollision(ball, canvasSize);
         utils.applyGravityToObject(ball);
+        utils.applyDrag(ball);
 
         draw.ball(ctx, ball);
 
