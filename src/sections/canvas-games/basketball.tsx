@@ -87,8 +87,8 @@ export const Basketball = () => {
 
             setCanvasSize({ width: canvas.width, height: canvas.height });
             const thisCtx = canvas.getContext("2d") as CanvasRenderingContext2D;
-            thisCtx.canvas.width = container?.offsetWidth;
-            thisCtx.canvas.height = container?.offsetHeight;
+            canvas.setAttribute("width", container?.offsetWidth.toString());
+            canvas.setAttribute("height", container?.offsetHeight.toString());
             setCtx(thisCtx);
         }, 2000);
         // eslint-disable-next-line react-hooks/exhaustive-deps
