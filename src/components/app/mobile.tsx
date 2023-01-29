@@ -7,7 +7,7 @@ import { Basketball } from "../../sections/canvas-games/basketball";
 import { Colours } from "../../sections/colours/colours";
 
 export const MobileApp = () => (
-    <Router>
+    <Router basename="/aboutrob">
         <Header
             sections={[
                 "Main",

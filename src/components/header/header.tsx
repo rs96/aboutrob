@@ -15,7 +15,7 @@ const Header = ({ sections }: HeaderProps) => (
                 <div key={section} className="section">
                     <NavLink
                         className={getActiveClassName}
-                        to={`/aboutrob/${section.toLowerCase()}`}
+                        to={`/${section.toLowerCase()}`}
                     >
                         {section}
                     </NavLink>
