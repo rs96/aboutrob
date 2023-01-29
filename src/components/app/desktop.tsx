@@ -21,11 +21,11 @@ export const DesktopApp = () => (
         />
         <div className="main-body">
             <Routes>
-                <Route path="/" element={<div>Home</div>} />
-                <Route path="/fonts" element={<Fonts />} />
-                <Route path="/colours" element={<Colours />} />
-                <Route path="/video" element={<Player />} />
-                <Route path="/game" element={<Basketball />} />
+                <Route path="/aboutrob/" element={<div>Home</div>} />
+                <Route path="/aboutrob/fonts" element={<Fonts />} />
+                <Route path="/aboutrob/colours" element={<Colours />} />
+                <Route path="/aboutrob/video" element={<Player />} />
+                <Route path="/aboutrob/game" element={<Basketball />} />
             </Routes>
         </div>
     </Router>
