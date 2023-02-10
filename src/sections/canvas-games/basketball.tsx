@@ -4,6 +4,7 @@ import "./index.css";
 import * as types from "./types";
 import * as constants from "./constants";
 import * as draw from "./draw";
+import { isMobile } from "../../queries";
 
 const ball = {
     position: { x: 10, y: 10 },
@@ -95,7 +96,10 @@ export const Basketball = () => {
     }, []);
 
     return (
-        <div id="canvas-container" className="canvas-container">
+        <div
+            id="canvas-container"
+            className={`canvas-container ${isMobile() ? "mobile" : ""}`}
+        >
             <canvas id="canvas" onClick={handleBallThrow(ball)}></canvas>
         </div>
     );

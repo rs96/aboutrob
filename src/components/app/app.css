@@ -31,6 +31,10 @@ body {
     width: 100%;
 }
 
+.mobile {
+    margin-top: 0;
+}
+
 .card-area {
     display: flex;
     justify-content: center;
