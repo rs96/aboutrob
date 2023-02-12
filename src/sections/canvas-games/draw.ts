@@ -17,7 +17,8 @@ export const ball = (
         2 * Math.PI,
         false
     );
-    ctx.fillStyle = "orange";
+    ctx.strokeStyle = "#EF6C00";
+    ctx.fillStyle = "#FF9800";
     ctx.fill();
     ctx.lineWidth = 1;
     ctx.stroke();
@@ -40,16 +41,27 @@ export const target = (
         2 * Math.PI,
         false
     );
-    ctx.fillStyle = "green";
+    ctx.fillStyle = "#66BB6A";
+    ctx.strokeStyle = "#2E7D32";
     ctx.fill();
     ctx.lineWidth = 1;
     ctx.stroke();
 };
 
-export const score = (ctx: CanvasRenderingContext2D | null, score: number) => {
+export const score = (
+    ctx: CanvasRenderingContext2D | null,
+    score: number,
+    canvasSize: { width: number; height: number }
+) => {
     if (!ctx) {
         console.log("Error: Not finding canvas context");
         return;
     }
-    ctx.fillText(`Score: ${score}`, 5, 15);
+    ctx.font = "bold 30vh helvetica";
+    ctx.fillStyle = "#CCCCCC";
+    ctx.fillText(
+        `${score}`,
+        (canvasSize.width * 7) / 20,
+        (3 * canvasSize.height) / 5
+    );
 };

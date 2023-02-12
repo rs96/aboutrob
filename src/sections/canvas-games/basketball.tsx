@@ -9,13 +9,13 @@ import { isMobile } from "../../queries";
 const ball = {
     position: { x: 10, y: 10 },
     velocity: { x: 1, y: 0 },
-    radius: 5,
+    radius: 10,
 };
 
 const target = {
     position: { x: 50, y: 50 },
     velocity: { x: 0, y: 0 },
-    radius: 5,
+    radius: 10,
 };
 
 let score = 0;
@@ -36,11 +36,14 @@ export const Basketball = () => {
         const xDiff = mouseX - ball.position.x ?? 0;
         const yDiff = ball.position.y - mouseY ?? 0;
 
-        const powerScaler = 20;
+        const powerScaler = 10;
 
         // set speeds accordingly
         ball.velocity.x = Math.min(constants.MAX_VELOCITY, xDiff / powerScaler);
-        ball.velocity.y = Math.max(-constants.MAX_VELOCITY, -yDiff / 15);
+        ball.velocity.y = Math.max(
+            -constants.MAX_VELOCITY,
+            -yDiff / powerScaler
+        );
     };
 
     const getCursorPosition = (canvas: HTMLCanvasElement, event: any) => {
@@ -65,9 +68,9 @@ export const Basketball = () => {
             score++;
         }
 
+        draw.score(ctx, score, canvasSize);
         draw.ball(ctx, ball);
         draw.target(ctx, target);
-        draw.score(ctx, score);
 
         window.requestAnimationFrame(frame);
     };
@@ -86,10 +89,15 @@ export const Basketball = () => {
                 "canvas-container"
             ) as HTMLElement;
 
-            setCanvasSize({ width: canvas.width, height: canvas.height });
+            const canvasSize = {
+                w: container?.offsetWidth,
+                h: container?.offsetHeight,
+            };
+
+            canvas.setAttribute("width", canvasSize.w.toString());
+            canvas.setAttribute("height", canvasSize.h.toString());
+            setCanvasSize({ width: canvasSize.w, height: canvasSize.h });
             const thisCtx = canvas.getContext("2d") as CanvasRenderingContext2D;
-            canvas.setAttribute("width", container?.offsetWidth.toString());
-            canvas.setAttribute("height", container?.offsetHeight.toString());
             setCtx(thisCtx);
         }, 2000);
         // eslint-disable-next-line react-hooks/exhaustive-deps
